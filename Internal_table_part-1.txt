@@ -1,0 +1,62 @@
+Report ZPratap_Internal_table_1.
+
+
+* ways to Declare the internal table.
+
+* option - 1 - specifice fields and independent WA and body.
+
+
+Types: Begin of stu_orders,
+       aufnr type aufnr,
+       auart type aufart,
+       autyp, type auftyp,
+       cal_field type char20,
+       End of stu_order.
+
+Data: wa_orders type stu_orders,
+      it_orders type table of stu_orders.
+
+
+* option - 2 - All DB fields and  independent work area and body.
+
+ Data: wa_mara type mara,
+      it_mara type table of mara.
+
+
+* option - 3 - specifice  fields and in-built Header line with body.
+
+Data:it_orders_hl type TABLE OF stu_orders WITH HEADER LINE.
+
+
+* option - 4  - ALL DB fields and in-built header line with body.
+
+Data:it_materails_hl type table of mara with header line.
+
+
+* option - 5  - Old method with Occurs keyword . body with in-built header line.
+
+data: begin of it_po_orders occurs 0,
+      ebeln type ebeln,
+      ebelp type ebelp,
+      matnr type matnr,
+      end of it_po_orders.
+
+
+* Fill the data.
+
+
+select aufnr auart autyp from aufk into wa_orders.
+Append wa_orders to it_orders.
+endselect.
+
+select * from mara into wa_mara.
+
+Append wa_mara into it_mara.
+endselect.
+
+
+select aufnr auart autyp from aufk into it_orders_hl.
+append it_orders_hl. " to it_orders_hl.
+endselect.
+    
+
